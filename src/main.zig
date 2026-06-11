@@ -9,7 +9,7 @@ const Item = enum {
 const Row = [24]Item;
 const Window = [6]Row;
 
-const Loc = packed struct {
+const Loc = struct {
     row: u6,
     col: u24,
     item: Item,
@@ -75,7 +75,7 @@ pub fn main() !void {
         var tmp = try makeWindow(&.{ player, box });
         try draw(&tmp);
 
-        var input = (try std.io.getStdIn().reader().readUntilDelimiterOrEofAlloc(allocator, '\n', 1024 * 2048)) orelse continue;
+        const input = (try std.io.getStdIn().reader().readUntilDelimiterOrEofAlloc(allocator, '\n', 1024 * 2048)) orelse continue;
         defer allocator.free(input);
 
         if (input.len < 1) continue;
